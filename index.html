@@ -14,6 +14,8 @@
         <p class="eyebrow">Sreekanth Professional Portfolio</p>
         <h1>Selected Portfolio Artifacts</h1>
         <p class="hero-intro">
+          A collection of projects and learning activities that demonstrate my developing skills in artificial
+          intelligence, machine learning, model selection, and collaborative problem-solving.
         </p>
 
         <div class="hero-metrics" aria-label="Project highlights">
@@ -25,11 +27,33 @@
             <span class="metric-label">Artifact 2</span>
             <strong>ML and deep learning comparison</strong>
           </div>
+          <div class="metric">
+            <span class="metric-label">Artifact 3</span>
+            <strong>AI-guided training methods</strong>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="artifact-card" aria-label="Artifact details">
+    <nav class="artifact-tabs" role="tablist" aria-label="Portfolio artifacts">
+      <button class="artifact-tab is-active" id="tab-artifact-1" type="button" role="tab"
+        aria-selected="true" aria-controls="artifact-1" data-artifact="artifact-1">
+        <span>01</span>
+        LangGraph Chatbot
+      </button>
+      <button class="artifact-tab" id="tab-artifact-2" type="button" role="tab"
+        aria-selected="false" aria-controls="artifact-2" data-artifact="artifact-2" tabindex="-1">
+        <span>02</span>
+        Model Comparison
+      </button>
+      <button class="artifact-tab" id="tab-artifact-3" type="button" role="tab"
+        aria-selected="false" aria-controls="artifact-3" data-artifact="artifact-3" tabindex="-1">
+        <span>03</span>
+        AI-Guided Learning
+      </button>
+    </nav>
+
+    <section class="artifact-card" id="artifact-1" role="tabpanel" aria-labelledby="tab-artifact-1">
       <div class="artifact-visual">
         <div class="terminal-frame">
           <div class="terminal-bar">
@@ -97,7 +121,7 @@
       </div>
     </section>
 
-    <section class="artifact-card" aria-label="Artifact 2 details">
+    <section class="artifact-card" id="artifact-2" role="tabpanel" aria-labelledby="tab-artifact-2" hidden>
       <div class="artifact-visual">
         <div class="terminal-frame">
           <div class="terminal-bar">
@@ -182,6 +206,134 @@
         </div>
       </div>
     </section>
+
+    <section class="artifact-card" id="artifact-3" role="tabpanel" aria-labelledby="tab-artifact-3" hidden>
+      <div class="artifact-visual">
+        <div class="terminal-frame">
+          <div class="terminal-bar">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="summary-shell training-summary">
+            <div class="summary-card">
+              <p class="summary-badge">Artifact 3</p>
+              <p class="summary-title">Learning how machines learn with an AI coach</p>
+              <div class="learning-path" aria-label="Machine learning topics explored">
+                <span>Supervised</span>
+                <span>Unsupervised</span>
+                <span>Reinforcement</span>
+                <span>Optimization</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p>Interactive learning journey through machine learning training methods</p>
+      </div>
+
+      <div class="artifact-content">
+        <div class="artifact-block">
+          <span class="label">Title</span>
+          <h3>Exploring Machine Learning Training Methods with an AI Coach</h3>
+        </div>
+
+        <div class="artifact-block">
+          <span class="label">Project Overview</span>
+          <p>
+            This interactive course activity used a pre-trained chatbot as both a guide and a collaborator. Through a
+            structured dialogue, I worked through questions about how machine learning systems are trained and applied
+            my understanding to practical scenarios instead of relying only on a traditional lesson format.
+          </p>
+        </div>
+
+        <div class="artifact-block">
+          <span class="label">Objective</span>
+          <p>
+            The objective was to use AI guidance to connect machine learning theory with real-world examples. I also
+            practiced engaging in meaningful dialogue, evaluating feedback, and refining my reasoning while solving
+            complex problems collaboratively.
+          </p>
+        </div>
+
+        <div class="artifact-block">
+          <span class="label">Learning Process</span>
+          <p>
+            I began by introducing myself to the chatbot and then shared the assignment questions along with my own
+            answers. I asked the chatbot to evaluate my responses and explain where my reasoning could be improved.
+            Instead of simply giving me the answers, it provided feedback, clarification, and guidance that helped me
+            navigate toward the correct conclusions. This process allowed me to identify gaps in my understanding,
+            revise my responses, and build greater confidence in applying machine learning concepts.
+          </p>
+        </div>
+
+        <div class="artifact-block">
+          <span class="label">Skills Demonstrated</span>
+          <div class="tool-tags">
+            <span>Supervised learning</span>
+            <span>Unsupervised learning</span>
+            <span>Reinforcement learning</span>
+            <span>Optimization</span>
+            <span>Critical thinking</span>
+            <span>AI collaboration</span>
+            <span>Technical communication</span>
+          </div>
+        </div>
+
+        <div class="artifact-block">
+          <span class="label value-label">Reflection</span>
+          <p>
+            This activity strengthened my ability to explain why different training methods fit different problems.
+            It also showed me that working effectively with AI requires active participation: asking clear questions,
+            evaluating suggestions, and improving an answer rather than accepting the first response. These habits will
+            help me use AI responsibly while approaching real-world machine learning challenges.
+          </p>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <script>
+    const artifactTabs = Array.from(document.querySelectorAll('[role="tab"]'));
+    const artifactPanels = Array.from(document.querySelectorAll('[role="tabpanel"]'));
+
+    function showArtifact(selectedTab, updateHash = true) {
+      const selectedId = selectedTab.dataset.artifact;
+
+      artifactTabs.forEach((tab) => {
+        const isSelected = tab === selectedTab;
+        tab.classList.toggle('is-active', isSelected);
+        tab.setAttribute('aria-selected', String(isSelected));
+        tab.tabIndex = isSelected ? 0 : -1;
+      });
+
+      artifactPanels.forEach((panel) => {
+        panel.hidden = panel.id !== selectedId;
+      });
+
+      if (updateHash) {
+        history.replaceState(null, '', `#${selectedId}`);
+      }
+    }
+
+    artifactTabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => showArtifact(tab));
+      tab.addEventListener('keydown', (event) => {
+        let nextIndex = index;
+
+        if (event.key === 'ArrowRight') nextIndex = (index + 1) % artifactTabs.length;
+        if (event.key === 'ArrowLeft') nextIndex = (index - 1 + artifactTabs.length) % artifactTabs.length;
+        if (event.key === 'Home') nextIndex = 0;
+        if (event.key === 'End') nextIndex = artifactTabs.length - 1;
+        if (nextIndex === index) return;
+
+        event.preventDefault();
+        artifactTabs[nextIndex].focus();
+        showArtifact(artifactTabs[nextIndex]);
+      });
+    });
+
+    const initialTab = artifactTabs.find((tab) => `#${tab.dataset.artifact}` === window.location.hash);
+    if (initialTab) showArtifact(initialTab, false);
+  </script>
 </body>
 </html>
